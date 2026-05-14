@@ -1,8 +1,10 @@
 streamlit
 torch
 torchvision
-streamlit-webrtc
+streamlit-webrtc==0.47.1
 opencv-python-headless
 Pillow
 av
 numpy
+aioice
+aiortc
