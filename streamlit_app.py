@@ -484,16 +484,18 @@ elif st.session_state.page == 'detection':
                 '<div style="background:#07060d; border:2px solid #c9973a; border-radius:4px; overflow:hidden;">',
                 unsafe_allow_html=True
             )
-            RTC_CONFIG = RTCConfiguration({"iceServers": [
-                {"urls": ["stun:stun.l.google.com:19302"]},
-                {"urls": ["stun:stun1.l.google.com:19302"]},
-                {"urls": ["turn:openrelay.metered.ca:80"],
-                 "username": "openrelayproject", "credential": "openrelayproject"},
-                {"urls": ["turn:openrelay.metered.ca:443"],
-                 "username": "openrelayproject", "credential": "openrelayproject"},
-                {"urls": ["turn:openrelay.metered.ca:443?transport=tcp"],
-                 "username": "openrelayproject", "credential": "openrelayproject"},
-            ]})
+            try:
+                from twilio.rest import Client as TwilioClient
+                twilio_client = TwilioClient(
+                    st.secrets["TWILIO_ACCOUNT_SID"],
+                    st.secrets["TWILIO_AUTH_TOKEN"]
+                )
+                token = twilio_client.tokens.create()
+                RTC_CONFIG = RTCConfiguration({"iceServers": token.ice_servers})
+            except Exception:
+                RTC_CONFIG = RTCConfiguration({"iceServers": [
+                    {"urls": ["stun:stun.l.google.com:19302"]}
+                ]})
             ctx = webrtc_streamer(
                 key="mudra-stream",
                 video_processor_factory=MudraProcessor,
