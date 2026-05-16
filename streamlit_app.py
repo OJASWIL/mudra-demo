@@ -21,49 +21,25 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────
-#  CSS  (fixed version)
+#  CSS
 # ─────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
 
-/* ── HIDE STREAMLIT CHROME ── */
 #MainMenu, footer, header { visibility: hidden; }
+.block-container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+[data-testid="stAppViewContainer"] { background: #07060d; }
+section[data-testid="stMain"] { background: #07060d; padding: 0 !important; }
+[data-testid="stMain"] > div:first-child { padding-top: 0 !important; margin-top: 0 !important; }
+div[data-testid="stVerticalBlock"] { gap: 0 !important; }
 
-/* Remove ALL default padding/margin from Streamlit containers */
-.block-container {
-    padding: 0 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-}
-[data-testid="stAppViewContainer"] {
-    background: #07060d;
-}
-section[data-testid="stMain"] {
-    background: #07060d;
-    padding: 0 !important;
-}
-/* Kill the gap Streamlit adds above first element */
-[data-testid="stMain"] > div:first-child {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-}
-/* Kill extra top padding on block container */
-div[data-testid="stVerticalBlock"] {
-    gap: 0 !important;
-}
-
-/* ── NAVBAR ── */
 .nav-bar {
     background: #0d0c1a;
     border-bottom: 1px solid rgba(201,151,58,0.3);
     padding: 1rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 999;
 }
 .nav-logo { display: flex; align-items: center; gap: 14px; }
 .nav-emblem {
@@ -83,18 +59,10 @@ div[data-testid="stVerticalBlock"] {
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
 .gold-bar { height:1px; background:linear-gradient(90deg,transparent,#c9973a,transparent); }
 
-/* ── LANDING ──
-   KEY FIX: don't use min-height with calc(100vh).
-   Streamlit nests many divs; use padding to center instead.
-── */
 .landing-wrap {
-    width: 100%;
-    padding: 5rem 2rem 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    width: 100%; padding: 5rem 2rem 4rem;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
     background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(201,151,58,0.07) 0%, transparent 70%), #07060d;
     box-sizing: border-box;
 }
@@ -103,14 +71,12 @@ div[data-testid="stVerticalBlock"] {
     font-family: 'Space Mono', monospace; font-size: 0.65rem;
     color: #c9973a; letter-spacing: 0.18em; text-transform: uppercase;
     border: 1px solid rgba(201,151,58,0.3); padding: 6px 18px;
-    border-radius: 20px; margin-bottom: 2rem;
-    background: rgba(201,151,58,0.05);
+    border-radius: 20px; margin-bottom: 2rem; background: rgba(201,151,58,0.05);
 }
 .land-h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.8rem, 6vw, 4.8rem);
-    font-weight: 700; line-height: 1.08;
-    color: #e8c06a; margin-bottom: 1.5rem;
+    font-weight: 700; line-height: 1.08; color: #e8c06a; margin-bottom: 1.5rem;
 }
 .land-h1 em { font-style: italic; color: #e05252; }
 .land-sub {
@@ -122,8 +88,7 @@ div[data-testid="stVerticalBlock"] {
 .stats-grid {
     display: flex; gap: 0;
     border: 1px solid rgba(201,151,58,0.2); border-radius: 8px;
-    overflow: hidden; margin-bottom: 3rem;
-    background: rgba(15,14,26,0.8);
+    overflow: hidden; margin-bottom: 3rem; background: rgba(15,14,26,0.8);
 }
 .stat-cell { padding: 1.2rem 2.2rem; text-align: center; border-right: 1px solid rgba(201,151,58,0.15); }
 .stat-cell:last-child { border-right: none; }
@@ -131,17 +96,14 @@ div[data-testid="stVerticalBlock"] {
 .stat-l { font-family:'Space Mono',monospace; font-size:0.55rem; color:#5a5470; letter-spacing:0.15em; text-transform:uppercase; margin-top:3px; display:block; }
 .model-icons { display:flex; gap:1.5rem; margin-bottom:3rem; justify-content:center; }
 .model-icon-card {
-    background: rgba(15,14,26,0.9);
-    border: 1px solid rgba(201,151,58,0.15);
-    border-radius: 10px; padding: 1rem 1.4rem;
-    text-align: center; min-width: 130px;
+    background: rgba(15,14,26,0.9); border: 1px solid rgba(201,151,58,0.15);
+    border-radius: 10px; padding: 1rem 1.4rem; text-align: center; min-width: 130px;
 }
 .model-icon-num  { font-size:1.5rem; margin-bottom:4px; }
 .model-icon-name { font-family:'Space Mono',monospace; font-size:0.62rem; color:#7a7490; display:block; }
 .model-icon-acc  { font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:700; display:block; margin-top:4px; }
 .land-hint { font-family:'Space Mono',monospace; font-size:0.62rem; color:#4a4560; margin-top:1rem; }
 
-/* ── BUTTON ── */
 .stButton > button {
     background: linear-gradient(135deg, #c9973a, #e8b840) !important;
     color: #07060d !important; border: none !important;
@@ -154,56 +116,51 @@ div[data-testid="stVerticalBlock"] {
 }
 .stButton > button:hover { box-shadow: 0 0 40px rgba(201,151,58,0.5) !important; }
 
-/* ── DETECTION PAGE ── */
-.det-wrap {
-    padding: 1.4rem 2rem;
-    background: #07060d;
-}
+.det-wrap { padding: 1.4rem 2rem; background: #07060d; }
 .section-lbl {
     font-family: 'Space Mono', monospace; font-size: 0.58rem;
     color: #5a5470; letter-spacing: 0.2em; text-transform: uppercase;
     margin-bottom: 10px; display: block;
 }
 
-/* ── FIX: webrtc white box / gap ──
-   The streamlit-webrtc component renders with a white background
-   and extra padding. Force dark theme on it.
-── */
-[data-testid="stWebRtcStreamer"],
-div[data-testid="stWebRtcStreamer"] > div,
-.css-1xarl3l,
-iframe {
-    background: #07060d !important;
+/* Mode toggle tabs */
+.mode-tabs {
+    display: flex; gap: 0; margin-bottom: 1rem;
+    border: 1px solid rgba(201,151,58,0.2); border-radius: 6px; overflow: hidden;
 }
-/* Target the inner webrtc container wrapper */
-.stWebRtcStreamer > div {
-    background: #07060d !important;
-    border: none !important;
+.mode-tab {
+    flex: 1; padding: 0.6rem 1rem; text-align: center;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    cursor: pointer; border: none; transition: all 0.2s;
 }
-/* The START button webrtc renders */
-.css-1xarl3l button, [data-testid="stWebRtcStreamer"] button {
-    background: #e05252 !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
+.mode-tab.active { background: rgba(201,151,58,0.15); color: #e8c06a; }
+.mode-tab.inactive { background: rgba(15,14,26,0.8); color: #5a5470; }
+
+/* Upload area */
+[data-testid="stFileUploader"] {
+    background: #12111f !important;
+    border: 2px dashed rgba(201,151,58,0.3) !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
+}
+[data-testid="stFileUploader"] label {
+    color: #7a7490 !important;
     font-family: 'Space Mono', monospace !important;
-    font-size: 0.78rem !important;
-    font-weight: 700 !important;
-}
-/* Video element itself */
-video {
-    border: 2px solid #c9973a !important;
-    border-radius: 4px !important;
-    display: block !important;
-    background: #07060d !important;
-}
-/* Kill any white/grey placeholder before camera starts */
-[data-testid="stWebRtcStreamer"] > div > div {
-    background: #07060d !important;
-    min-height: 0 !important;
+    font-size: 0.75rem !important;
 }
 
-/* ── MODEL CARDS ── */
+/* webrtc */
+[data-testid="stWebRtcStreamer"],
+div[data-testid="stWebRtcStreamer"] > div,
+.css-1xarl3l, iframe { background: #07060d !important; }
+.stWebRtcStreamer > div { background: #07060d !important; border: none !important; }
+video {
+    border: 2px solid #c9973a !important;
+    border-radius: 4px !important; display: block !important;
+    background: #07060d !important;
+}
+[data-testid="stWebRtcStreamer"] > div > div { background: #07060d !important; min-height: 0 !important; }
+
 .mcard {
     background: #12111f; border-radius: 6px; overflow: hidden;
     margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);
@@ -232,12 +189,16 @@ video {
     font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #4a4560;
 }
 
-/* ── COLOR HELPERS ── */
 .red { color:#e05252; } .yel { color:#e8b840; } .grn { color:#45b07c; }
 .bg-red { background:#e05252; } .bg-yel { background:#e8b840; } .bg-grn { background:#45b07c; }
 .hd-red { background:rgba(224,82,82,0.12);  border-left:3px solid #e05252; }
 .hd-yel { background:rgba(232,184,64,0.12); border-left:3px solid #e8b840; }
 .hd-grn { background:rgba(69,176,124,0.12); border-left:3px solid #45b07c; }
+
+.upload-img-box {
+    border: 2px solid rgba(201,151,58,0.3); border-radius: 6px;
+    overflow: hidden; margin-bottom: 1rem;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -327,7 +288,7 @@ transform = transforms.Compose([
 ])
 
 def run_predict(model, img_pil, dev):
-    t = transform(img_pil).unsqueeze(0).to(dev)
+    t = transform(img_pil.convert('RGB')).unsqueeze(0).to(dev)
     with torch.no_grad():
         probs = torch.softmax(model(t), dim=1)
         conf, pred = torch.max(probs, 1)
@@ -349,54 +310,49 @@ def card_html(num, title, acc, hd, c, bg, name, conf):
       </div>
     </div>"""
 
+def predictions_html(l1, c1, l2, c2, l3, c3, ms=0):
+    preds = [l1, l2, l3]
+    if l1==l2==l3:
+        ag_txt = f"✓ All 3 agree — {l1}"; ag_col = "#45b07c"
+    elif max(preds.count(p) for p in preds) >= 2:
+        maj = max(set(preds), key=preds.count)
+        ag_txt = f"⚡ 2/3 agree — {maj}"; ag_col = "#e8b840"
+    else:
+        ag_txt = "✗ Models disagree"; ag_col = "#e05252"
+
+    ms_line = f'<div class="inf-tag">Inference: {ms} ms</div>' if ms else ''
+    return (
+        card_html("①","Baseline CNN","95.90","hd-red","red","bg-red", l1, c1) +
+        card_html("②","Improved CNN","96.29","hd-yel","yel","bg-yel", l2, c2) +
+        card_html("③","ResNet50 ★",  "99.34","hd-grn","grn","bg-grn", l3, c3) +
+        f"""<div class="agree-card">
+              <div class="section-lbl">Model Agreement</div>
+              <div class="agree-val" style="color:{ag_col}">{ag_txt}</div>
+            </div>{ms_line}"""
+    )
+
 # ─────────────────────────────────────────────
 #  VIDEO PROCESSOR
 # ─────────────────────────────────────────────
 class MudraProcessor(VideoProcessorBase):
     def __init__(self):
-        self.model1 = None
-        self.model2 = None
-        self.model3 = None
-        self.device = None
-        self.result = {
-            'l1':'—','c1':0,'l2':'—','c2':0,'l3':'—','c3':0,
-            'ag_txt':'— Waiting...','ag_col':'#4a4560','ms':0
-        }
+        self.model1 = self.model2 = self.model3 = self.device = None
+        self.result = {'l1':'—','c1':0,'l2':'—','c2':0,'l3':'—','c3':0,'ms':0}
         self._frame_count = 0
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
         self._frame_count += 1
-
         if self._frame_count % 3 == 0 and self.model1 is not None:
-            rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            pil = Image.fromarray(rgb)
-            t0  = time.time()
+            pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+            t0 = time.time()
             l1,c1 = run_predict(self.model1, pil, self.device)
             l2,c2 = run_predict(self.model2, pil, self.device)
             l3,c3 = run_predict(self.model3, pil, self.device)
             ms = int((time.time()-t0)*1000)
-
-            preds = [l1,l2,l3]
-            if l1==l2==l3:
-                ag_txt = f"✓ All 3 agree — {l1}"
-                ag_col = "#45b07c"
-            elif max(preds.count(p) for p in preds) >= 2:
-                maj    = max(set(preds), key=preds.count)
-                ag_txt = f"⚡ 2/3 agree — {maj}"
-                ag_col = "#e8b840"
-            else:
-                ag_txt = "✗ Models disagree"
-                ag_col = "#e05252"
-
-            self.result = dict(l1=l1,c1=c1,l2=l2,c2=c2,l3=l3,c3=c3,
-                               ag_txt=ag_txt,ag_col=ag_col,ms=ms)
-
-            cv2.putText(img, f"ResNet50: {self.result['l3']} ({self.result['c3']}%)",
-                        (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (69,176,124), 2)
-            cv2.putText(img, self.result['ag_txt'],
-                        (10, img.shape[0]-15), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (201,151,58), 2)
-
+            self.result = dict(l1=l1,c1=c1,l2=l2,c2=c2,l3=l3,c3=c3,ms=ms)
+            cv2.putText(img, f"ResNet50: {l3} ({c3}%)", (10,30),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.75, (69,176,124), 2)
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 # ─────────────────────────────────────────────
@@ -404,9 +360,11 @@ class MudraProcessor(VideoProcessorBase):
 # ─────────────────────────────────────────────
 if 'page' not in st.session_state:
     st.session_state.page = 'landing'
+if 'mode' not in st.session_state:
+    st.session_state.mode = 'upload'  # default: upload (works on cloud)
 
 # ─────────────────────────────────────────────
-#  NAVBAR  — rendered via HTML (no Streamlit widget gap)
+#  NAVBAR
 # ─────────────────────────────────────────────
 page_label = 'LIVE' if st.session_state.page == 'detection' else 'READY'
 st.markdown(f"""
@@ -433,8 +391,6 @@ model1, model2, model3, device = load_models()
 #  LANDING PAGE
 # ─────────────────────────────────────────────
 if st.session_state.page == 'landing':
-    # KEY FIX: wrap everything in a single HTML block so Streamlit
-    # doesn't inject padding/gap between elements.
     st.markdown("""
     <div class="landing-wrap">
       <div class="land-badge">✦ &nbsp; Real-time Recognition &nbsp; ✦</div>
@@ -442,7 +398,7 @@ if st.session_state.page == 'landing':
       <p class="land-sub">
         Real-time recognition of Bharatanatyam hand gestures using
         <strong>three deep learning models</strong> working in ensemble.
-        Position your hand in front of the camera to begin.
+        Use webcam or upload a photo to begin.
       </p>
       <div class="stats-grid">
         <div class="stat-cell"><span class="stat-n">50</span><span class="stat-l">Mudra Classes</span></div>
@@ -470,7 +426,6 @@ if st.session_state.page == 'landing':
     </div>
     """, unsafe_allow_html=True)
 
-    # Button must be a Streamlit widget — center it with columns
     _, col_btn, _ = st.columns([2, 1, 2])
     with col_btn:
         if st.button("▷   Begin Detection"):
@@ -479,7 +434,7 @@ if st.session_state.page == 'landing':
 
     st.markdown(
         '<p class="land-hint" style="text-align:center;padding-bottom:2rem">'
-        'Camera permission required  •  Your video is processed locally</p>',
+        'Webcam or image upload supported  •  Video processed locally</p>',
         unsafe_allow_html=True
     )
 
@@ -493,33 +448,65 @@ elif st.session_state.page == 'detection':
     col_cam, col_pred = st.columns([1.2, 1], gap="large")
 
     with col_cam:
-        st.markdown('<span class="section-lbl">📷 &nbsp; Live Feed</span>', unsafe_allow_html=True)
+        # ── MODE TOGGLE ──
+        st.markdown('<span class="section-lbl">📷 &nbsp; Input Mode</span>', unsafe_allow_html=True)
+        mode_col1, mode_col2 = st.columns(2)
+        with mode_col1:
+            if st.button("📤  Upload Image", use_container_width=True):
+                st.session_state.mode = 'upload'
+                st.rerun()
+        with mode_col2:
+            if st.button("🎥  Live Webcam", use_container_width=True):
+                st.session_state.mode = 'webcam'
+                st.rerun()
 
-        # KEY FIX: add a dark background wrapper div BEFORE the webrtc widget
-        # so the white placeholder box is hidden behind it
         st.markdown(
-            '<div style="background:#07060d; border:2px solid #c9973a; border-radius:4px; overflow:hidden;">',
+            f'<div style="font-family:Space Mono,monospace;font-size:0.62rem;color:#c9973a;margin-bottom:12px">'
+            f'Mode: {"📤 Image Upload" if st.session_state.mode == "upload" else "🎥 Live Webcam"}</div>',
             unsafe_allow_html=True
         )
 
-        ctx = webrtc_streamer(
-            key="mudra-stream",
-            video_processor_factory=MudraProcessor,
-            rtc_configuration=RTCConfiguration(
-                {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
-            ),
-            media_stream_constraints={"video": True, "audio": False},
-            async_processing=True,
-        )
+        # ── CAMERA CAPTURE MODE ──
+        if st.session_state.mode == 'upload':
+            st.markdown('<span class="section-lbl">📸 &nbsp; Capture Mudra</span>', unsafe_allow_html=True)
+            uploaded = st.camera_input("Take a photo", label_visibility="collapsed")
 
-        st.markdown('</div>', unsafe_allow_html=True)
+            if uploaded:
+                img_pil = Image.open(uploaded)
+                st.markdown('<div class="upload-img-box">', unsafe_allow_html=True)
+                st.image(img_pil, use_column_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
 
-        # Pass models to processor
-        if ctx.video_processor:
-            ctx.video_processor.model1 = model1
-            ctx.video_processor.model2 = model2
-            ctx.video_processor.model3 = model3
-            ctx.video_processor.device = device
+        # ── WEBCAM MODE ──
+        else:
+            st.markdown('<span class="section-lbl">📷 &nbsp; Live Feed</span>', unsafe_allow_html=True)
+            st.markdown(
+                '<div style="background:#07060d; border:2px solid #c9973a; border-radius:4px; overflow:hidden;">',
+                unsafe_allow_html=True
+            )
+            RTC_CONFIG = RTCConfiguration({"iceServers": [
+                {"urls": ["stun:stun.l.google.com:19302"]},
+                {"urls": ["stun:stun1.l.google.com:19302"]},
+                {"urls": ["turn:openrelay.metered.ca:80"],
+                 "username": "openrelayproject", "credential": "openrelayproject"},
+                {"urls": ["turn:openrelay.metered.ca:443"],
+                 "username": "openrelayproject", "credential": "openrelayproject"},
+                {"urls": ["turn:openrelay.metered.ca:443?transport=tcp"],
+                 "username": "openrelayproject", "credential": "openrelayproject"},
+            ]})
+            ctx = webrtc_streamer(
+                key="mudra-stream",
+                video_processor_factory=MudraProcessor,
+                rtc_configuration=RTC_CONFIG,
+                media_stream_constraints={"video": True, "audio": False},
+                async_processing=True,
+            )
+            st.markdown('</div>', unsafe_allow_html=True)
+            if ctx.video_processor:
+                ctx.video_processor.model1 = model1
+                ctx.video_processor.model2 = model2
+                ctx.video_processor.model3 = model3
+                ctx.video_processor.device = device
 
         st.markdown(
             f'<div style="font-family:Space Mono,monospace;font-size:0.62rem;color:#4a4560;margin-top:8px">'
@@ -531,38 +518,43 @@ elif st.session_state.page == 'detection':
             st.session_state.page = 'landing'
             st.rerun()
 
+    # ── PREDICTIONS ──
     with col_pred:
         st.markdown('<span class="section-lbl">🔮 &nbsp; Model Predictions</span>', unsafe_allow_html=True)
         pred_box = st.empty()
 
-        # Live update loop
-        while ctx.state.playing if ctx else False:
-            if ctx.video_processor:
-                r = ctx.video_processor.result
-                preds_html = (
-                    card_html("①","Baseline CNN","95.90","hd-red","red","bg-red", r['l1'], r['c1']) +
-                    card_html("②","Improved CNN","96.29","hd-yel","yel","bg-yel", r['l2'], r['c2']) +
-                    card_html("③","ResNet50 ★",  "99.34","hd-grn","grn","bg-grn", r['l3'], r['c3']) +
-                    f"""<div class="agree-card">
-                          <div class="section-lbl">Model Agreement</div>
-                          <div class="agree-val" style="color:{r['ag_col']}">{r['ag_txt']}</div>
-                        </div>
-                        <div class="inf-tag">Inference: {r['ms']} ms</div>"""
+        # Upload mode — predict on uploaded image
+        if st.session_state.mode == 'upload':
+            if 'uploaded' in dir() and uploaded:
+                t0 = time.time()
+                l1,c1 = run_predict(model1, img_pil, device)
+                l2,c2 = run_predict(model2, img_pil, device)
+                l3,c3 = run_predict(model3, img_pil, device)
+                ms = int((time.time()-t0)*1000)
+                pred_box.markdown(predictions_html(l1,c1,l2,c2,l3,c3,ms), unsafe_allow_html=True)
+            else:
+                pred_box.markdown(
+                    predictions_html("—",0,"—",0,"—",0) +
+                    '<div style="font-family:Space Mono,monospace;font-size:0.65rem;color:#5a5470;margin-top:8px">← Upload an image to see predictions</div>',
+                    unsafe_allow_html=True
                 )
-                pred_box.markdown(preds_html, unsafe_allow_html=True)
-            time.sleep(0.15)
 
-        # Default idle state
-        pred_box.markdown(
-            card_html("①","Baseline CNN","95.90","hd-red","red","bg-red","—",0) +
-            card_html("②","Improved CNN","96.29","hd-yel","yel","bg-yel","—",0) +
-            card_html("③","ResNet50 ★",  "99.34","hd-grn","grn","bg-grn","—",0) +
-            """<div class="agree-card">
-                 <div class="section-lbl">Model Agreement</div>
-                 <div class="agree-val" style="color:#4a4560">— Start camera to begin</div>
-               </div>""",
-            unsafe_allow_html=True
-        )
+        # Webcam mode — live update loop
+        else:
+            if 'ctx' in dir():
+                while ctx.state.playing if ctx else False:
+                    if ctx.video_processor:
+                        r = ctx.video_processor.result
+                        pred_box.markdown(
+                            predictions_html(r['l1'],r['c1'],r['l2'],r['c2'],r['l3'],r['c3'],r['ms']),
+                            unsafe_allow_html=True
+                        )
+                    time.sleep(0.15)
+            pred_box.markdown(
+                predictions_html("—",0,"—",0,"—",0) +
+                '<div style="font-family:Space Mono,monospace;font-size:0.65rem;color:#5a5470;margin-top:8px">← Start camera to see predictions</div>',
+                unsafe_allow_html=True
+            )
 
     st.markdown("""
     <div class="det-footer">
@@ -571,5 +563,4 @@ elif st.session_state.page == 'detection':
       <span>•</span><span>GPU T4 ×2</span>
     </div>
     """, unsafe_allow_html=True)
-
     st.markdown('</div>', unsafe_allow_html=True)
