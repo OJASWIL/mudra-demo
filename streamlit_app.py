@@ -10,9 +10,6 @@ import cv2
 import numpy as np
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
 
-# ─────────────────────────────────────────────
-#  PAGE CONFIG
-# ─────────────────────────────────────────────
 st.set_page_config(
     page_title="Mudra Vision",
     page_icon="☸",
@@ -20,9 +17,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ─────────────────────────────────────────────
-#  CSS
-# ─────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
@@ -104,6 +98,14 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
 .model-icon-acc  { font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:700; display:block; margin-top:4px; }
 .land-hint { font-family:'Space Mono',monospace; font-size:0.62rem; color:#4a4560; margin-top:1rem; }
 
+/* CENTER BUTTON */
+.center-btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .stButton > button {
     background: linear-gradient(135deg, #c9973a, #e8b840) !important;
     color: #07060d !important; border: none !important;
@@ -113,6 +115,7 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
     letter-spacing: 0.08em !important; border-radius: 6px !important;
     box-shadow: 0 0 30px rgba(201,151,58,0.3) !important;
     transition: all 0.2s !important;
+    width: 100% !important;
 }
 .stButton > button:hover { box-shadow: 0 0 40px rgba(201,151,58,0.5) !important; }
 
@@ -123,20 +126,6 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
     margin-bottom: 10px; display: block;
 }
 
-/* Mode toggle tabs */
-.mode-tabs {
-    display: flex; gap: 0; margin-bottom: 1rem;
-    border: 1px solid rgba(201,151,58,0.2); border-radius: 6px; overflow: hidden;
-}
-.mode-tab {
-    flex: 1; padding: 0.6rem 1rem; text-align: center;
-    font-family: 'Space Mono', monospace; font-size: 0.7rem;
-    cursor: pointer; border: none; transition: all 0.2s;
-}
-.mode-tab.active { background: rgba(201,151,58,0.15); color: #e8c06a; }
-.mode-tab.inactive { background: rgba(15,14,26,0.8); color: #5a5470; }
-
-/* Upload area */
 [data-testid="stFileUploader"] {
     background: #12111f !important;
     border: 2px dashed rgba(201,151,58,0.3) !important;
@@ -149,7 +138,6 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
     font-size: 0.75rem !important;
 }
 
-/* webrtc */
 [data-testid="stWebRtcStreamer"],
 div[data-testid="stWebRtcStreamer"] > div,
 .css-1xarl3l, iframe { background: #07060d !important; }
@@ -202,9 +190,6 @@ video {
 </style>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
-#  MODELS
-# ─────────────────────────────────────────────
 NUM_CLASSES = 50
 CLASS_NAMES = [
     'Alapadmam','Anjali','Aralam','Ardhachandran','Ardhapathaka',
@@ -319,7 +304,6 @@ def predictions_html(l1, c1, l2, c2, l3, c3, ms=0):
         ag_txt = f"⚡ 2/3 agree — {maj}"; ag_col = "#e8b840"
     else:
         ag_txt = "✗ Models disagree"; ag_col = "#e05252"
-
     ms_line = f'<div class="inf-tag">Inference: {ms} ms</div>' if ms else ''
     return (
         card_html("①","Baseline CNN","95.90","hd-red","red","bg-red", l1, c1) +
@@ -331,9 +315,6 @@ def predictions_html(l1, c1, l2, c2, l3, c3, ms=0):
             </div>{ms_line}"""
     )
 
-# ─────────────────────────────────────────────
-#  VIDEO PROCESSOR
-# ─────────────────────────────────────────────
 class MudraProcessor(VideoProcessorBase):
     def __init__(self):
         self.model1 = self.model2 = self.model3 = self.device = None
@@ -355,17 +336,11 @@ class MudraProcessor(VideoProcessorBase):
                         cv2.FONT_HERSHEY_SIMPLEX, 0.75, (69,176,124), 2)
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# ─────────────────────────────────────────────
-#  SESSION STATE
-# ─────────────────────────────────────────────
 if 'page' not in st.session_state:
     st.session_state.page = 'landing'
 if 'mode' not in st.session_state:
-    st.session_state.mode = 'upload'  # default: upload (works on cloud)
+    st.session_state.mode = 'upload'
 
-# ─────────────────────────────────────────────
-#  NAVBAR
-# ─────────────────────────────────────────────
 page_label = 'LIVE' if st.session_state.page == 'detection' else 'READY'
 st.markdown(f"""
 <div class="nav-bar">
@@ -387,9 +362,6 @@ st.markdown(f"""
 
 model1, model2, model3, device = load_models()
 
-# ─────────────────────────────────────────────
-#  LANDING PAGE
-# ─────────────────────────────────────────────
 if st.session_state.page == 'landing':
     st.markdown("""
     <div class="landing-wrap">
@@ -426,8 +398,9 @@ if st.session_state.page == 'landing':
     </div>
     """, unsafe_allow_html=True)
 
-    _, col_btn, _ = st.columns([2, 1, 2])
-    with col_btn:
+    # CENTER BUTTON — single column centered
+    col1, col2, col3 = st.columns([3, 2, 3])
+    with col2:
         if st.button("▷   Begin Detection"):
             st.session_state.page = 'detection'
             st.rerun()
@@ -438,17 +411,12 @@ if st.session_state.page == 'landing':
         unsafe_allow_html=True
     )
 
-# ─────────────────────────────────────────────
-#  DETECTION PAGE
-# ─────────────────────────────────────────────
 elif st.session_state.page == 'detection':
 
     st.markdown('<div class="det-wrap">', unsafe_allow_html=True)
-
     col_cam, col_pred = st.columns([1.2, 1], gap="large")
 
     with col_cam:
-        # ── MODE TOGGLE ──
         st.markdown('<span class="section-lbl">📷 &nbsp; Input Mode</span>', unsafe_allow_html=True)
         mode_col1, mode_col2 = st.columns(2)
         with mode_col1:
@@ -466,18 +434,14 @@ elif st.session_state.page == 'detection':
             unsafe_allow_html=True
         )
 
-        # ── CAMERA CAPTURE MODE ──
         if st.session_state.mode == 'upload':
             st.markdown('<span class="section-lbl">📸 &nbsp; Capture Mudra</span>', unsafe_allow_html=True)
             uploaded = st.camera_input("Take a photo", label_visibility="collapsed")
-
             if uploaded:
                 img_pil = Image.open(uploaded)
                 st.markdown('<div class="upload-img-box">', unsafe_allow_html=True)
                 st.image(img_pil, use_column_width=True)
                 st.markdown('</div>', unsafe_allow_html=True)
-
-        # ── WEBCAM MODE ──
         else:
             st.markdown('<span class="section-lbl">📷 &nbsp; Live Feed</span>', unsafe_allow_html=True)
             st.markdown(
@@ -518,12 +482,10 @@ elif st.session_state.page == 'detection':
             st.session_state.page = 'landing'
             st.rerun()
 
-    # ── PREDICTIONS ──
     with col_pred:
         st.markdown('<span class="section-lbl">🔮 &nbsp; Model Predictions</span>', unsafe_allow_html=True)
         pred_box = st.empty()
 
-        # Upload mode — predict on uploaded image
         if st.session_state.mode == 'upload':
             if 'uploaded' in dir() and uploaded:
                 t0 = time.time()
@@ -535,11 +497,9 @@ elif st.session_state.page == 'detection':
             else:
                 pred_box.markdown(
                     predictions_html("—",0,"—",0,"—",0) +
-                    '<div style="font-family:Space Mono,monospace;font-size:0.65rem;color:#5a5470;margin-top:8px">← Upload an image to see predictions</div>',
+                    '<div style="font-family:Space Mono,monospace;font-size:0.65rem;color:#5a5470;margin-top:8px">← Take a photo to see predictions</div>',
                     unsafe_allow_html=True
                 )
-
-        # Webcam mode — live update loop
         else:
             if 'ctx' in dir():
                 while ctx.state.playing if ctx else False:
