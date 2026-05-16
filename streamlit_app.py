@@ -398,11 +398,13 @@ if st.session_state.page == 'landing':
     """, unsafe_allow_html=True)
 
     # CENTER BUTTON — single column centered
+    st.markdown('<div style="display:flex;justify-content:center;margin:0 auto;">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([2.5, 1.5, 2.5])
     with col2:
         if st.button("▷   Begin Detection"):
             st.session_state.page = 'detection'
             st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown(
         '<p class="land-hint" style="text-align:center;padding-bottom:2rem">'
