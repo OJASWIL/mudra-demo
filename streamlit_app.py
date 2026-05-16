@@ -106,6 +106,12 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
     margin: 0 auto;
 }
 
+/* Landing page center button */
+[data-testid="stMainBlockContainer"] > div > div > div > div > div > div:has(button) {
+    display: flex !important;
+    justify-content: center !important;
+}
+
 .stButton > button {
     background: linear-gradient(135deg, #c9973a, #e8b840) !important;
     color: #07060d !important; border: none !important;
