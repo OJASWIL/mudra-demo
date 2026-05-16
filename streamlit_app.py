@@ -115,7 +115,6 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
     letter-spacing: 0.08em !important; border-radius: 6px !important;
     box-shadow: 0 0 30px rgba(201,151,58,0.3) !important;
     transition: all 0.2s !important;
-    width: 100% !important;
 }
 .stButton > button:hover { box-shadow: 0 0 40px rgba(201,151,58,0.5) !important; }
 
@@ -399,7 +398,7 @@ if st.session_state.page == 'landing':
     """, unsafe_allow_html=True)
 
     # CENTER BUTTON — single column centered
-    col1, col2, col3 = st.columns([3, 2, 3])
+    col1, col2, col3 = st.columns([2.5, 1.5, 2.5])
     with col2:
         if st.button("▷   Begin Detection"):
             st.session_state.page = 'detection'
