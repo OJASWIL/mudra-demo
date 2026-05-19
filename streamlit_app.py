@@ -106,12 +106,6 @@ div[data-testid="stVerticalBlock"] { gap: 0 !important; }
     margin: 0 auto;
 }
 
-/* Landing page center button */
-[data-testid="stMainBlockContainer"] > div > div > div > div > div > div:has(button) {
-    display: flex !important;
-    justify-content: center !important;
-}
-
 .stButton > button {
     background: linear-gradient(135deg, #c9973a, #e8b840) !important;
     color: #07060d !important; border: none !important;
@@ -403,20 +397,25 @@ if st.session_state.page == 'landing':
     </div>
     """, unsafe_allow_html=True)
 
-    # CENTER BUTTON — single column centered
-    st.markdown('<div style="display:flex;justify-content:center;margin:0 auto;">', unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([2.5, 1.5, 2.5])
-    with col2:
-        if st.button("▷   Begin Detection"):
-            st.session_state.page = 'detection'
-            st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('''
+    <div style="display:flex;justify-content:center;margin:1rem 0 0.5rem;">
+      <a href="https://huggingface.co/spaces/ojaswi06/mudra-vision" target="_blank"
+         style="background:linear-gradient(135deg,#c9973a,#e8b840);color:#07060d;
+         padding:0.9rem 3rem;font-family:Space Mono,monospace;font-size:0.88rem;
+         font-weight:700;letter-spacing:0.08em;border-radius:6px;text-decoration:none;
+         box-shadow:0 0 30px rgba(201,151,58,0.3);display:inline-block;">
+        ▷ &nbsp; Begin Detection
+      </a>
+    </div>
+    ''', unsafe_allow_html=True)
 
     st.markdown(
-        '<p class="land-hint" style="text-align:center;padding-bottom:2rem">'
+        '<p class="land-hint" style="text-align:center;padding-bottom:1rem">'
         'Webcam or image upload supported  •  Video processed locally</p>',
         unsafe_allow_html=True
     )
+
+
 
 elif st.session_state.page == 'detection':
 
